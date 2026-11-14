@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0f1115">
+<title>NEWS STUDIO — 新聞スタジオ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;500;700&family=Noto+Serif+JP:wght@400;600;900&family=Noto+Sans+Tamil:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Neo palette — 墨・桜・翡翠 */
+  --ink:#0f1115; --ink-2:#1b1f27;
+  --paper:#f7f5f0; --paper-2:#efece4;
+  --jade:#2e7d6b; --jade-soft:#4fa891;
+  --sakura:#e8a0a8; --sakura-deep:#c96b76;
+  --gold:#c9a227;
+  --text:#1a1d22; --muted:#6b7280;
+  --line:rgba(0,0,0,.08);
+  --radius:20px;
+  --shadow:0 1px 2px rgba(0,0,0,.04),0 8px 32px rgba(15,17,21,.08);
+  --shadow-lift:0 2px 6px rgba(0,0,0,.06),0 20px 48px rgba(15,17,21,.16);
+  --ease:cubic-bezier(.22,1,.36,1);
+  --font-jp:"Noto Serif JP",serif;
+  --font-cn:"Noto Sans SC",sans-serif;
+  --font-ta:"Noto Sans Tamil",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --paper:#14171c; --paper-2:#1b1f27;
+    --text:#e8e6e1; --muted:#9aa0ab;
+    --line:rgba(255,255,255,.08);
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 32px rgba(0,0,0,.5);
+  }
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;background:var(--paper);color:var(--text);font-family:var(--font-ta);overscroll-behavior:none}
+body{display:flex;flex-direction:column}
+
+/* ── Header ── */
+header{
+  position:sticky;top:0;z-index:40;
+  display:flex;align-items:center;gap:14px;
+  padding:14px 18px;padding-top:calc(14px + env(safe-area-inset-top));
+  background:color-mix(in srgb,var(--paper) 85%,transparent);
+  backdrop-filter:blur(20px) saturate(180%);
+  -webkit-backdrop-filter:blur(20px) saturate(180%);
+  border-bottom:1px solid var(--line);
+}
+.logo{
+  font-family:var(--font-jp);font-weight:900;font-size:19px;letter-spacing:.04em;
+  display:flex;align-items:center;gap:10px;
+}
+.logo .mark{
+  width:30px;height:30px;border-radius:9px;display:grid;place-items:center;
+  background:linear-gradient(135deg,var(--jade),var(--sakura-deep));
+  color:#fff;font-size:15px;font-family:var(--font-cn);font-weight:700;
+  box-shadow:0 4px 14px rgba(46,125,107,.35);
+}
+.logo small{font-family:var(--font-cn);font-weight:300;font-size:12px;color:var(--muted);letter-spacing:.1em;margin-left:2px}
+.spacer{flex:1}
+.icon-btn{
+  width:38px;height:38px;border-radius:12px;border:1px solid var(--line);
+  background:var(--paper-2);color:var(--text);display:grid;place-items:center;
+  cursor:pointer;transition:transform .2s var(--ease),background .2s;
+}
+.icon-btn:active{transform:scale(.92)}
+.icon-btn:hover{background:color-mix(in srgb,var(--jade) 12%,var(--paper-2))}
+.icon-btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+
+/* ── Main ── */
+main{flex:1;position:relative;display:flex;flex-direction:column;min-height:0}
+.view{position:absolute;inset:0;display:none;flex-direction:column;overflow:auto;padding:20px 18px 120px}
+.view.on{display:flex}
+
+/* TV section */
+.tv-hero{
+  border-radius:var(--radius);padding:28px 22px;
+  background:
+    radial-gradient(120% 80% at 100% 0%,rgba(232,160,168,.25),transparent 60%),
+    radial-gradient(120% 80% at 0% 100%,rgba(46,125,107,.22),transparent 60%),
+    var(--paper-2);
+  border:1px solid var(--line);box-shadow:var(--shadow);
+  position:relative;overflow:hidden;
+}
+.tv-hero::before{
+  content:"紙";position:absolute;right:-10px;bottom:-30px;
+  font-family:var(--font-jp);font-weight:900;font-size:140px;line-height:1;
+  color:color-mix(in srgb,var(--jade) 8%,transparent);pointer-events:none;
+}
+.tv-hero h1{margin:0 0 8px;font-family:var(--font-jp);font-weight:600;font-size:22px;letter-spacing:.02em}
+.tv-hero p{margin:0;color:var(--muted);font-size:14px;line-height:1.6;max-width:36ch}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;margin-top:18px;
+  padding:12px 20px;border-radius:14px;border:none;cursor:pointer;
+  background:linear-gradient(135deg,var(--jade),var(--jade-soft));
+  color:#fff;font:600 14px var(--font-ta);letter-spacing:.02em;
+  box-shadow:0 6px 20px rgba(46,125,107,.35);
+  transition:transform .2s var(--ease),box-shadow .2s;
+}
+.btn:active{transform:scale(.96);box-shadow:0 2px 8px rgba(46,125,107,.3)}
+.btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* Paper view */
+#paper{position:relative;padding:0;overflow:hidden}
+#stage{position:absolute;inset:0;touch-action:pan-y}
+#stage canvas{box-shadow:var(--shadow);border-radius:6px}
+#empty{position:absolute;inset:0;display:grid;place-items:center;color:var(--muted);font-size:14px;text-align:center;padding:30px}
+#load{position:absolute;inset:0;display:grid;place-items:center;background:color-mix(in srgb,var(--paper) 80%,transparent);backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:opacity .25s}
+#load.on{opacity:1;pointer-events:auto}
+.spinner{width:34px;height:34px;border:3px solid var(--line);border-top-color:var(--jade);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Hint toast */
+#hint{
+  position:absolute;left:50%;bottom:120px;transform:translate(-50%,20px);
+  padding:10px 18px;border-radius:999px;font-size:12px;
+  background:var(--ink);color:#fff;opacity:0;pointer-events:none;
+  transition:opacity .4s var(--ease),transform .4s var(--ease);
+  box-shadow:var(--shadow-lift);white-space:nowrap;
+}
+#hint.on{opacity:.95;transform:translate(-50%,0)}
+
+/* ── Floating Zen Bar (bottom nav) ── */
+nav.zen{
+  position:fixed;bottom:calc(18px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);
+  display:flex;gap:4px;padding:6px;border-radius:22px;z-index:50;
+  background:color-mix(in srgb,var(--paper) 72%,transparent);
+  backdrop-filter:blur(24px) saturate(180%);
+  -webkit-backdrop-filter:blur(24px) saturate(180%);
+  border:1px solid var(--line);box-shadow:var(--shadow-lift);
+}
+nav.zen button{
+  position:relative;display:flex;flex-direction:column;align-items:center;gap:2px;
+  padding:10px 16px;border-radius:16px;border:none;background:transparent;
+  color:var(--muted);font:500 10px var(--font-ta);cursor:pointer;
+  transition:color .25s var(--ease),background .25s var(--ease),transform .2s var(--ease);
+}
+nav.zen button svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;transition:stroke .25s}
+nav.zen button.on{color:var(--jade);background:color-mix(in srgb,var(--jade) 14%,transparent)}
+nav.zen button.on svg{stroke:var(--jade)}
+nav.zen button:active{transform:scale(.9)}
+nav.zen button.on::after{
+  content:"";position:absolute;bottom:5px;width:4px;height:4px;border-radius:50%;
+  background:var(--jade);
+}
+
+/* Toast */
+.toast{
+  position:fixed;bottom:110px;left:50%;transform:translate(-50%,16px);
+  padding:11px 20px;border-radius:14px;background:var(--ink);color:#fff;
+  font-size:13px;opacity:0;pointer-events:none;z-index:60;
+  transition:opacity .3s,transform .3s var(--ease);box-shadow:var(--shadow-lift);
+}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+/* Zoom overlay */
+.zoom{
+  position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.9);
+  display:grid;place-items:center;padding:20px;cursor:zoom-out;
+  animation:fadeIn .25s var(--ease);
+}
+.zoom img{max-width:100%;max-height:100%;border-radius:8px;box-shadow:0 20px 60px rgba(0,0,0,.6)}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+/* News list */
+.news-list{display:flex;flex-direction:column;gap:12px;margin-top:20px}
+.news-item{
+  display:flex;gap:14px;padding:16px;border-radius:var(--radius);
+  background:var(--paper-2);border:1px solid var(--line);
+  transition:transform .2s var(--ease),box-shadow .2s;
+  cursor:pointer;
+}
+.news-item:active{transform:scale(.98)}
+.news-item:hover{box-shadow:var(--shadow)}
+.news-item .tag{
+  flex-shrink:0;width:44px;height:44px;border-radius:12px;
+  background:linear-gradient(135deg,var(--jade),var(--sakura));
+  display:grid;place-items:center;color:#fff;font-family:var(--font-jp);font-weight:700;font-size:17px;
+}
+.news-item .info{flex:1;min-width:0}
+.news-item .info h3{margin:0 0 4px;font-size:15px;font-weight:600;line-height:1.35}
+.news-item .info p{margin:0;font-size:12px;color:var(--muted);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+
+/* Gallery */
+.gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-top:16px}
+.gal figure{margin:0;border-radius:14px;overflow:hidden;background:var(--paper-2);cursor:zoom-in;position:relative;aspect-ratio:1;box-shadow:var(--shadow)}
+.gal img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s var(--ease)}
+.gal figure:hover img{transform:scale(1.05)}
+.gal figcaption{position:absolute;bottom:0;left:0;right:0;padding:8px 10px;font-size:11px;color:#fff;background:linear-gradient(transparent,rgba(0,0,0,.7))}
+
+/* Settings */
+.settings{display:flex;flex-direction:column;gap:14px;margin-top:8px}
+.settings .field{
+  padding:16px;border-radius:16px;background:var(--paper-2);border:1px solid var(--line);
+}
+.settings label{display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:.08em}
+.settings input[type=file],.settings input[type=text]{
+  width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--line);
+  background:var(--paper);color:var(--text);font:14px var(--font-ta);
+}
+.settings input[type=file]{padding:8px}
+.section-title{font-family:var(--font-jp);font-weight:600;font-size:18px;margin:0 0 6px;letter-spacing:.02em}
+.section-title small{font-family:var(--font-cn);font-weight:300;font-size:12px;color:var(--muted);margin-left:6px}
+.section-sub{margin:0 0 16px;color:var(--muted);font-size:13px;line-height:1.6}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <span class="mark">新</span>
+    NEWS STUDIO <small>新聞</small>
+  </div>
+  <div class="spacer"></div>
+  <button class="icon-btn" id="btnSettings" aria-label="Settings">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+  </button>
+</header>
+
+<main id="main">
+  <!-- TV -->
+  <section class="view on" id="tv">
+    <div class="tv-hero">
+      <h1>இன்றைய செய்திகள்</h1>
+      <p>Today's issue will be out soon. Meanwhile, watch Mobile TV.</p>
+      <button class="btn" onclick="toast('Mobile TV loading…')">
+        <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        Watch Mobile TV
+      </button>
+    </div>
+    <div class="news-list">
+      <div class="news-item">
+        <div class="tag">紙</div>
+        <div class="info"><h3>இன்றைய இதழ் விரைவில்</h3><p>Today's issue will be out soon. Stay tuned for the latest headlines.</p></div>
+      </div>
+      <div class="news-item">
+        <div class="tag">電</div>
+        <div class="info"><h3>Mobile TV நேரலை</h3><p>Watch live coverage on Mobile TV. Tap to open.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Paper -->
+  <section class="view" id="paper">
+    <div id="stage"></div>
+    <div id="empty">No content in this section. Add a PDF in Settings.</div>
+    <div id="load"><div class="spinner"></div></div>
+    <div id="hint">◀ இழுக்கவும் அல்லது விளிம்பைத் தட்டவும் ▶ | Double-tap to zoom</div>
+  </section>
+
+  <!-- Gallery -->
+  <section class="view" id="gallery">
+    <h2 class="section-title">படத்தொகுப்பு <small>図集</small></h2>
+    <p class="section-sub">Tap a photo to zoom. Images are stored locally.</p>
+    <div class="gal"></div>
+  </section>
+
+  <!-- Settings -->
+  <section class="view" id="settings">
+    <h2 class="section-title">அமைப்புகள் <small>設定</small></h2>
+    <p class="section-sub">Manage your PDF and gallery. All data stays on your device.</p>
+    <div class="settings">
+      <div class="field">
+        <label>PDF ஏற்று / Upload PDF</label>
+        <input type="file" id="pdfFile" accept="application/pdf">
+      </div>
+      <div class="field">
+        <label>படம் சேர் / Add image</label>
+        <input type="file" id="imgFile" accept="image/*" multiple>
+      </div>
+      <div class="field">
+        <label>பக்கம் / Page</label>
+        <input type="text" id="pageNum" placeholder="e.g. 3" inputmode="numeric">
+      </div>
+    </div>
+  </section>
+</main>
+
+<nav class="zen" id="nav">
+  <button data-view="tv" class="on">
+    <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="m17 2-5 5-5-5"/></svg>
+    TV
+  </button>
+  <button data-view="paper">
+    <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+    Paper
+  </button>
+  <button data-view="gallery">
+    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+    Gallery
+  </button>
+  <button data-view="settings">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+    Settings
+  </button>
+</nav>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ═══════════════ Core helpers ═══════════════ */
+const $=s=>document.querySelector(s);
+const $$=s=>document.querySelectorAll(s);
+let toastTimer;
+function toast(msg){const t=$('#toast');t.textContent=msg;t.classList.add('on');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('on'),2200);}
+
+/* ═══════════════ IndexedDB ═══════════════ */
+let _db;
+function db(){return _db||(_db=new Promise((res,rej)=>{const r=indexedDB.open('newsstudio',1);r.onupgradeneeded=()=>r.result.createObjectStore('kv');r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error);}));}
+async function dbSet(k,v){const d=await db();return new Promise((res,rej)=>{const tx=d.transaction('kv','readwrite');tx.objectStore('kv').put(v,k);tx.oncomplete=res;tx.onerror=()=>rej(tx.error);});}
+async function dbGet(k){const d=await db();return new Promise((res,rej)=>{const tx=d.transaction('kv','readonly');const r=tx.objectStore('kv').get(k);r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error);});}
+
+/* ═══════════════ View router ═══════════════ */
+let view='tv';
+function show(v){
+  view=v;
+  $$('.view').forEach(el=>el.classList.toggle('on',el.id===v));
+  $$('nav.zen button').forEach(b=>b.classList.toggle('on',b.dataset.view===v));
+  if(v==='gallery')renderGallery();
+  if(v==='settings')loadSettings();
+  history.replaceState(null,'','#'+v);
+}
+$$('nav.zen button').forEach(b=>b.onclick=()=>show(b.dataset.view));
+$('#btnSettings').onclick=()=>show('settings');
+
+/* ═══════════════ Gallery ═══════════════ */
+async function renderGallery(){
+  const g=$('#gallery .gal');g.innerHTML='';
+  const items=await dbGet('gallery')||[];
+  if(!items.length){g.innerHTML='<p style="color:var(--muted);font-size:13px;grid-column:1/-1">No images yet. Add some in Settings.</p>';return;}
+  items.forEach((it,i)=>{
+    const f=document.createElement('figure');
+    const im=document.createElement('img');im.src=it.src;im.loading='lazy';im.alt=it.cap||'';
+    f.appendChild(im);
+    if(it.cap){const c=document.createElement('figcaption');c.textContent=it.cap;f.appendChild(c);}
+    f.onclick=()=>{const o=document.createElement('div');o.className='zoom';const z=document.createElement('img');z.src=it.src;o.appendChild(z);o.onclick=()=>o.remove();$('#main').appendChild(o);};
+    g.appendChild(f);
+  });
+}
+
+/* ═══════════════ Settings ═══════════════ */
+async function loadSettings(){
+  const pdf=await dbGet('pdf');
+  if(pdf){$('#pageNum').value=await dbGet('pg')||'';}
+}
+$('#pdfFile').onchange=async e=>{
+  const f=e.target.files[0];if(!f)return;
+  const buf=await f.arrayBuffer();
+  await dbSet('pdf',{name:f.name,buf});
+  await dbSet('pg',0);
+  toast('PDF saved. Opening…');
+  openBuf(buf,f.name,0,false);
+  show('paper');
+};
+$('#imgFile').onchange=async e=>{
+  const files=[...e.target.files];if(!files.length)return;
+  const items=await dbGet('gallery')||[];
+  for(const f of files){
+    const src=await new Promise(r=>{const fr=new FileReader();fr.onload=()=>r(fr.result);fr.readAsDataURL(f);});
+    items.push({src,cap:f.name});
+  }
+  await dbSet('gallery',items);
+  toast(files.length+' image(s) added');
+  e.target.value='';
+};
+$('#pageNum').onchange=async e=>{
+  const n=parseInt(e.target.value,10)||0;
+  await dbSet('pg',n);
+  const pdf=await dbGet('pdf');
+  if(pdf&&pdf.buf)openBuf(pdf.buf,pdf.name,n,false);
+};
+
+/* ═══════════════ PDF / FlipBook (minimal engine) ═══════════════ */
+let pdfjsLoaded=false;
+function loadPdfJs(){
+  if(pdfjsLoaded)return Promise.resolve();
+  return new Promise((res,rej)=>{
+    const s=document.createElement('script');
+    s.src='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
+    s.onload=()=>{pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';pdfjsLoaded=true;res();};
+    s.onerror=rej;document.head.appendChild(s);
+  });
+}
+
+let pdfDoc=null,curBuf=null,curName='',curPage=0;
+let stage=$('#stage');
+
+function openBuf(buf,name,page=0,save=true){
+  $('#load').classList.add('on');
+  loadPdfJs().then(async()=>{
+    try{
+      pdfDoc=await pdfjsLib.getDocument({data:new Uint8Array(buf.slice(0))}).promise;
+      curBuf=buf;curName=name;curPage=page;
+      $('#empty').style.display='none';
+      if(save){await dbSet('pdf',{name,buf});await dbSet('pg',page);}
+      await renderPage(page);
+      const h=$('#hint');h.classList.remove('on');void h.offsetWidth;h.classList.add('on');
+      setTimeout(()=>h.classList.remove('on'),3500);
+    }catch(err){console.error(err);toast('Could not open PDF. Check your connection.');}
+    $('#load').classList.remove('on');
+  }).catch(()=>{toast('PDF.js failed to load');$('#load').classList.remove('on');});
+}
+
+async function renderPage(n){
+  if(!pdfDoc)return;
+  if(n<0)n=0;if(n>=pdfDoc.numPages)n=pdfDoc.numPages-1;
+  curPage=n;
+  const page=await pdfDoc.getPage(n+1);
+  const viewport=page.getViewport({scale:1});
+  const maxW=stage.clientWidth||window.innerWidth;
+  const maxH=stage.clientHeight||window.innerHeight;
+  const scale=Math.min(maxW/viewport.width,maxH/viewport.height)*0.94;
+  const vp=page.getViewport({scale});
+  const canvas=document.createElement('canvas');
+  canvas.width=vp.width;canvas.height=vp.height;
+  canvas.style.width=vp.width+'px';canvas.style.height=vp.height+'px';
+  canvas.style.maxWidth='100%';canvas.style.maxHeight='100%';
+  const ctx=canvas.getContext('2d');
+  await page.render({canvasContext:ctx,viewport:vp}).promise;
+  stage.innerHTML='';
+  stage.appendChild(canvas);
+  await dbSet('pg',n);
+}
+
+/* Gestures: swipe + tap edges */
+let tx=0;
+stage.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;},{passive:true});
+stage.addEventListener('touchend',e=>{
+  const dx=e.changedTouches[0].clientX-tx;
+  if(Math.abs(dx)>50){renderPage(curPage+(dx<0?1:-1));}
+},{passive:true});
+stage.addEventListener('click',e=>{
+  const r=stage.getBoundingClientRect();
+  const x=(e.clientX-r.left)/r.width;
+  if(x<0.25)renderPage(curPage-1);
+  else if(x>0.75)renderPage(curPage+1);
+});
+
+/* restore on load */
+addEventListener('pageshow',e=>{if(e.persisted)location.reload();});
+(async()=>{
+  const d=await dbGet('pdf');
+  if(d&&d.buf){const p=await dbGet('pg')||0;openBuf(d.buf,d.name,p,false);}
+})();
+
+/* hash router */
+show((location.hash||'').slice(1)||'tv');
+window.addEventListener('hashchange',()=>show((location.hash||'').slice(1)||'tv'));
+
+/* resize */
+addEventListener('resize',()=>{if(view==='paper'&&pdfDoc)renderPage(curPage);});
+</script>
+</body>
+</html>
